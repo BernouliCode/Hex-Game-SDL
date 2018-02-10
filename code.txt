@@ -1,0 +1,133 @@
+#include <stdlib.h>
+#include <SDL/SDL.h>
+#include "Prototypes.h"
+#include <SDL/SDL_image.h>
+#define Haut 1024
+#define Larg 606
+#define Zero_x -359.26
+#define Zero_y -226.34
+
+int main ( int argc, char** argv )
+
+{
+    Uint16 flag=1;
+    Uint16 i=0,n=1;
+
+    SDL_Surface *Screen=NULL;
+    SDL_Surface *Table=NULL;
+    SDL_Surface *Player_1_Actif=NULL , *Player_1_Passif=NULL;
+    SDL_Surface *Player_2_Actif=NULL , *Player_2_Passif=NULL;
+    SDL_Surface *Black=NULL;
+    SDL_Surface *Hex=NULL;
+    SDL_Rect Tab_Pos;
+    //SDL_Rect Hex[81];
+    SDL_Rect Black_pos;
+    SDL_Rect Player_1_pos , Player_2_pos;
+    SDL_Event mEvent;
+    /*Hex[0].x=Zero_x;
+    Hex[0].y=Zero_y;
+    for(i=0;i<80;i++){
+        if((i+1)%9==0) {
+                //i++;
+                Hex[i+1].y=Hex[i].y+56;
+                Hex[i+1].x=Hex[0].x+n*64;
+                n++;
+                }
+            Hex[i+1].x=Hex[i].x+64;
+    }
+*/
+    Player_1_pos.x = 850;
+    Player_1_pos.y = 50;
+    Player_2_pos.x = 50;
+    Player_2_pos.y = 400;
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    Screen = SDL_SetVideoMode(Haut,Larg,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
+    SDL_FillRect(Screen,NULL,SDL_MapRGB(Screen->format,0,0,0));
+    //SDL_Flip(Screen);
+    Table=SDL_LoadBMP("table.bmp");
+    Player_1_Passif=IMG_Load("joueur1_passif.png");
+    Player_2_Passif=IMG_Load("joueur2_passif.png");
+    Player_1_Actif=IMG_Load("joueur1_actif.png");
+    Player_2_Actif=IMG_Load("joueur2_actif.png");
+    Black=IMG_Load("pion_noir.png");
+     Hex=IMG_Load("Hex.png");
+    //Player_2=SDL_LoadBMP("joueur2_actif.bmp");
+    Tab_Pos.x=(Haut)/2-(Haut)/2;
+    //Tab_Pos.x=0;
+    Tab_Pos.y=0;
+    Black_pos.x=0;
+    Black_pos.y=Zero_y;
+    SDL_BlitSurface(Table,NULL,Screen,&Tab_Pos);
+    SDL_BlitSurface(Player_1_Passif,NULL,Screen,&Player_1_pos);
+    SDL_BlitSurface(Player_2_Passif,NULL,Screen,&Player_2_pos);
+    SDL_BlitSurface(Black,NULL,Screen,&Black_pos);
+    SDL_Flip(Screen);
+    //SDL_Delay(2000);
+
+      /*  while(flag){
+            SDL_BlitSurface(Player_1_Actif,NULL,Screen,&Player_1_pos);
+            SDL_WaitEvent(&mEvent);
+            switch(mEvent.type){
+            case SDL_QUIT:
+            flag=0;
+            exit(0);
+            break;
+            case SDL_MOUSEBUTTONUP:
+                for(i=0;i<81;i++){
+                    //if((mEvent.button.x<=Hex[i].x+40&&mEvent.button.x>=Hex[i].x-40)&&(mEvent.button.y<=Hex[i].y+20&&mEvent.button.y>=Hex[i].y-20))
+
+                Black_pos.x = Hex[i].x;
+                Black_pos.y = Hex[i].y;
+                SDL_BlitSurface(Black,NULL,Screen,&Black_pos);
+                SDL_Flip(Screen);
+                //SDL_Delay(1000);
+                }
+           // break;
+           //}
+           //SDL_BlitSurface(Black,NULL,Screen,&Black_pos);
+           //SDL_Flip(Screen);
+       // }*/
+
+    //_sleep(2000)
+    //SDL_BlitSurface(Player_1_Passif,NULL,Screen,&Player_1_pos);
+
+    SDL_BlitSurface(Player_2_Actif,NULL,Screen,&Player_2_pos);
+
+
+    SDL_Flip(Screen);
+
+
+
+
+
+
+pause();
+//SDL_FreeSurface(Hex);
+SDL_FreeSurface(Black);
+SDL_FreeSurface(Screen);
+SDL_FreeSurface(Player_1_Actif);
+SDL_FreeSurface(Player_1_Passif);
+SDL_FreeSurface(Player_2_Actif);
+SDL_FreeSurface(Table);
+SDL_FreeSurface(Player_2_Passif);
+SDL_Quit();
+
+return 0;
+}
+void pause()
+{
+    int continuer = 1;
+    SDL_Event event;
+
+    while (continuer)
+    {
+        SDL_WaitEvent(&event);
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                continuer = 0;
+        }
+    }
+}
